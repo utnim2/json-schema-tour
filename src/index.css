@@ -1,0 +1,10 @@
+/* tailwind.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .gradient-wrapper {
+    @apply bg-gradient-to-r from-black to-[#010728] dark:from-[#010728] dark:to-black;
+  }
+}
