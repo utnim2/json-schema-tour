@@ -1,0 +1,59 @@
+{
+  "title": "JSON Schema Validation Wizard",
+  "description": "This wizard will guide you through validating your JSON schemas against Draft 2020-12.",
+  "steps": [
+    {
+      "id": 1, 
+      "description": "**Step 1: Provide a JSON Schema**",
+      "testcases": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "expectedValidation": false
+        },
+        {
+          "schema": {
+            "type": "object"
+          },
+          "expectedValidation": true
+        },
+        {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              }
+            }
+          },
+          "expectedValidation": true
+        }
+      ]
+    },
+    {
+      "id": 2, 
+      "description": "**Step 2: Validate Schema for Array of Numbers**",
+      "testcases": [
+        {
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "expectedValidation": true
+        },
+        {
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "expectedValidation": false
+        }
+      ]
+    }
+  ]
+}

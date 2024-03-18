@@ -1,117 +1,50 @@
-import React, { useState, useEffect } from "react";
-import {
-  validate,
-  InvalidSchemaError,
-  registerSchema,
-  unregisterSchema,
-  getMetaSchemaOutputFormat,
-  getShouldValidateSchema,
-} from "@hyperjump/json-schema/draft-2020-12";
-import { DETAILED } from "@hyperjump/json-schema/experimental";
-import "@hyperjump/json-schema/draft-2020-12";
-import { TopBar } from "./TopBar";
-getShouldValidateSchema;
 
-const defaultSchemaVersion = "https://json-schema.org/draft/2020-12/schema";
-const schemaUrl = "https://json-schema.hyperjump.io/schema";
-
-export default function Editor() {
-  const [schema, setSchema] = useState("");
-  const [validationOutput, setValidationOutput] = useState();
-
-  useEffect(() => {
-    // Register the schema when the component mounts
-    registerSchema(schema, schemaUrl, defaultSchemaVersion);
-
-    // Cleanup function to unregister the schema when the component unmounts
-    return () => {
-      unregisterSchema(schemaUrl);
-    };
-  }, [schema]);
-
-  const handleValidation = async () => {
-    try {
-      const output = await validate(schemaUrl, schema, DETAILED);
-      getMetaSchemaOutputFormat(DETAILED);
-      console.log(output);
-      setValidationOutput(JSON.stringify(output, null, 2));
-      // unregisterSchema(schemaUrl)
-      if (output.valid) {
-        console.log("Validation is success :-)", output);
-      } else {
-        console.log("Validation is not success :-(", output.errors);
-      }
-    } catch (err) {
-      if (err instanceof InvalidSchemaError) {
-        setValidationOutput(
-          "Schema validation failed: " + JSON.stringify(err.output, null, 2)
-        );
-        console.log("Schema validation failed: ", err.output);
-      } else {
-        setValidationOutput("An error occurred: " + err.message);
-        console.log(err.message);
-      }
-    }
-  };
-
-  const handleSchemaChange = (event) => {
-    setSchema(event.target.value);
-  };
-
+export default function Component() {
   return (
-    <div className="">
-      <TopBar />
-      <main
-        key="1"
-        className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 p-4"
-      >
-        <header className="w-full max-w-3xl mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-200 mb-2">
-            JSON Schema Editor
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400">
-            Edit your JSON Schema and validate it with a single click.
-          </p>
-        </header>
-        <div className="w-full max-w-3xl bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 space-y-6">
+    <div className="flex justify-center py-10 bg-gray-800 min-h-screen">
+      <div className="flex space-x-6">
+        <div className="w-[350px] bg-gray-700 text-white">
           <div>
-            <label
-              className="block text-gray-800 dark:text-gray-200 font-medium mb-2"
-              htmlFor="schema-input"
-            >
+            <h3 className="text-lg font-semibold p-4">How to Validate</h3>
+            <div className="p-4">
+              <p className="mb-4">Follow these steps to validate your JSON Schema:</p>
+              <ol className="list-decimal list-inside">
+                <li>Enter your JSON Schema into the editor.</li>
+                <li>Click the "Validate Schema" button.</li>
+                <li>Review the validation output.</li>
+                <li>Make any necessary changes to your schema and re-validate.</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <div className="w-[600px] bg-gray-700 text-white">
+          <div>
+            <h3 className="text-lg font-semibold p-4">JSON Schema Editor</h3>
+            <p className="p-4">Validate your JSON Schema if it is valid for Draft 2020-12</p>
+          </div>
+          <div className="flex flex-col space-y-4 p-4">
+            <label className="block text-sm font-medium leading-none" htmlFor="json-schema">
               JSON Schema
             </label>
-            <Editor
-              height="90vh"
-              defaultLanguage="javascript"
-              defaultValue="// Enter your json schema here "
+            <textarea
+              className="h-40 bg-gray-600 text-white p-2"
+              id="json-schema"
+              placeholder="Enter your JSON Schema here..."
             />
-          </div>
-          <div className="flex justify-end">
-            <button
-              className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
-              onClick={handleValidation}
-            >
-              Validate Schema
-            </button>
-          </div>
-          <div>
-            <label
-              className="block text-gray-800 dark:text-gray-200 font-medium mb-2"
-              htmlFor="output-editor"
-            >
+            <button className="self-end bg-gray-900 text-white px-4 py-2 rounded-md">Validate Schema</button>
+            <label className="block text-sm font-medium leading-none" htmlFor="validation-output">
               Validation Output
             </label>
             <textarea
-              className="w-full h-40 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
-              id="output-editor"
-              placeholder="Validation results will be displayed here..."
+              className="h-40 bg-gray-600 text-white p-2"
+              id="validation-output"
+              placeholder="Validation results will appear here..."
               readOnly
-              value={validationOutput}
             />
           </div>
         </div>
-      </main>
+      </div>
     </div>
-  );
+  )
 }
+

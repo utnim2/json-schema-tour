@@ -3,9 +3,11 @@ import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import App from './App.jsx'
 import './index.css'
+import Hyper2 from './components/Hyper2.jsx'
 import Hyper from './components/Hyper.jsx'
 import Step2 from './components/Step2.jsx'
 import { TopBar } from './components/TopBar.jsx'
+import { Array } from './components/Array.jsx'
 
 const router = createBrowserRouter([
   {
@@ -14,12 +16,12 @@ const router = createBrowserRouter([
     errorElement: <div>404 Not Found</div>,
   },
   {
-    path: '/validate',
-    element: <Hyper />,
+    path: '/step-1',
+    element: <Hyper2 />,
   },
   {
-    path: '/schema-array',
-    element: <Step2 />,
+    path: '/step-2',
+    element: <Array />,
   }
 ])
 

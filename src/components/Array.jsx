@@ -25,7 +25,7 @@ function showErors(data) {
   }
   return message;
 }
-const Hyper = () => {
+export const Array = () => {
   const [schemas, setSchemas] = useState(null);
   // console.log(typeof schemas);
   const [validationOutput, setValidationOutput] = useState("");
@@ -55,13 +55,11 @@ const Hyper = () => {
         );
         const output = await validate(schemaUrl, schemas, BASIC);
         console.log(output);
-        if (output.valid) {
-          console.log("Validation is success :-)", output);
-          setValidationOutput("Validation is success ✅");
-          // setValidationOutput("")
+        if(schemas.type === 'array' && schemas.items && schemas.items.type === 'number') {
+          setValidationOutput("items of type number valid ✅");
         } else {
-          console.log("Validation is not success ❌", output.errors);
-          setValidationOutput("Validation is not success ❌");
+          // console.log("Validation is not success ❌", output.errors);
+          setValidationOutput("items of type number not valid ❌", output);
           toast.error("Validation is not success ❌");
         }
       } else {
@@ -72,12 +70,11 @@ const Hyper = () => {
     } catch (err) {
       if (err instanceof InvalidSchemaError) {
         setValidationOutput(err);
-        console.log("Validation is not success ❌",err);
         toast.error("Validation is not success ❌");
       } else {
         setValidationOutput(err);
         toast.error("Validation is not success ❌");
-        console.log("An error occurred: ", err);
+        // console.log("An error occurred: ", err);
       }
     }
   };
@@ -87,24 +84,24 @@ const Hyper = () => {
       <Confetti
         recycle={false}
         numberOfPieces={
-          validationOutput === "Validation is success ✅" ? 200 : 0
+          validationOutput === "items of type number valid ✅" ? 200 : 0
         }
         tweenDuration={1500}
         width={width}
         height={height}
       />
       <TopBar />
-      <main className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-black p-4">
+      <main className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-black to-gray-200 dark:from-black dark:to-gray-800 p-4">
         <header className="w-full max-w-3xl mb-8">
           <h1 className="text-4xl font-bold text-gray-800 dark:text-slate-300 mb-2">
             JSON Schema Editor
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
-            Edit your JSON Schema and validate it with a single click.
+          provide a JSON Schema that defines and array with items of type number and validate it
           </p>
         </header>
 
-        <div className="w-full max-w-3xl bg-white dark:bg-slate-800 rounded-lg shadow-lg p-6 space-y-6 ">
+        <div className="w-full max-w-3xl bg-gradient-to-br dark:from-gray-800 dark:to-gray-700 rounded-lg shadow-lg p-6 space-y-6 ">
           <div>
             <label
               className="block text-gray-800 dark:text-gray-200 font-medium mb-2"
@@ -129,10 +126,10 @@ const Hyper = () => {
 
           <div className="flex justify-end">
             <button
-              className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+              className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-900"
               onClick={validateSchema}
             >
-              Validate Schema
+              Validate
             </button>
           </div>
 
@@ -145,9 +142,9 @@ const Hyper = () => {
             </label>
             <Editor
               height="30vh"
-              defaultLanguage="plaintext"
+              defaultLanguage="json"
               theme="vs-dark"
-              value={JSON.stringify(validationOutput)}
+              value={validationOutput}
               options={{
                 minimap: { enabled: false },
                 folding: true,
@@ -162,5 +159,3 @@ const Hyper = () => {
     </div>
   );
 };
-
-export default Hyper;

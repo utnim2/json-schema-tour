@@ -417,7 +417,7 @@ export function Globe() {
           <p className="text-center text-base md:text-lg font-normal text-neutral-700 dark:text-slate-400 max-w-md mt-2 mx-auto">
             An interactive site to learn about JSON Schema
           </p>
-          <NavLink to='/validate' className="text-center text-lg md:text-lg font-normal text-neutral-700 max-w-md mt-2 mx-auto dark:bg-slate-400 block bg-black px-4 py-2 rounded w-40 dark:text-black z-100">Steps</NavLink>
+          <NavLink to='/step-1' className="text-center text-lg md:text-lg font-normal text-neutral-700 max-w-md mt-2 mx-auto dark:bg-slate-400 block bg-black px-4 py-2 rounded w-40 dark:text-black z-100">Steps</NavLink>
         </motion.div>
         <div className="absolute w-full bottom-0 inset-x-0 h-40 bg-gradient-to-b pointer-events-none select-none from-transparent dark:to-black to-white z-0" />
         <div className="absolute w-full -bottom-20 h-[94%] md:h-[1] z-10">
