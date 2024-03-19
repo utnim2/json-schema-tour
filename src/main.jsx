@@ -6,6 +6,8 @@ import './index.css'
 import Hyper2 from './components/Hyper2.jsx'
 import Array2 from './components/Array2.jsx'
 
+document.documentElement.classList.add('dark');
+
 const router = createBrowserRouter([
   {
     path: '/',
