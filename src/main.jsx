@@ -4,10 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import App from './App.jsx'
 import './index.css'
 import Hyper2 from './components/Hyper2.jsx'
-import Hyper from './components/Hyper.jsx'
-import Step2 from './components/Step2.jsx'
-import { TopBar } from './components/TopBar.jsx'
-import { Array } from './components/Array.jsx'
+import Array2 from './components/Array2.jsx'
 
 const router = createBrowserRouter([
   {
@@ -21,7 +18,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/step-2',
-    element: <Array />,
+    element: <Array2 />,
   }
 ])
 

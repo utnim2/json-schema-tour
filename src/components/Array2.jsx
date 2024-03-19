@@ -16,11 +16,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import Data from "./Data";
 import { formatErrorMessage } from "../../utils/errors";
 import { useNavigate } from "react-router-dom";
+import Confetti from "react-confetti";
 
-const Hyper2 = () => {
+let width = window.innerWidth;
+let height = window.innerHeight;
+
+const Array2 = () => {
   const [schemas, setSchemas] = useState(null);
   const [validationOutput, setValidationOutput] = useState("");
-  const [validated, setValidated] = useState(false);
   const navigate = useNavigate();
 
   const defaultSchemaVersion = "https://json-schema.org/draft/2020-12/schema";
@@ -49,20 +52,9 @@ const Hyper2 = () => {
           defaultSchemaVersion
         );
         const output = await validate(schemaUrl, schemas, BASIC);
-        console.log(output);
-        if (output.valid) {
-          setValidationOutput("Validation is success ✅");
-          toast.success("Procced to next step(click the step2 button in below)", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
-          setValidated(true);
+        // console.log(output);
+        if(schemas.type === 'array' && schemas.items && schemas.items.type === 'number') {
+          setValidationOutput(`items of type number valid ✅\nProceed to Home with the button below`);
         } else {
           const errorMessage = formatErrorMessage(output);
           setValidationOutput(`Invalid\n${errorMessage}`);
@@ -76,7 +68,6 @@ const Hyper2 = () => {
             progress: undefined,
             theme: "dark",
           });
-          setValidated(false);
         }
       } else {
         setValidationOutput("No schema provided");
@@ -95,8 +86,6 @@ const Hyper2 = () => {
       if (err instanceof InvalidSchemaError) {
         const errorMessage = formatErrorMessage(err.output);
         setValidationOutput(`Invalid\n${errorMessage}`);
-        // console.log(err.output);
-        // console.log(InvalidSchemaError);
         toast.error("Validation is not success ❌", {
           position: "top-right",
           autoClose: 5000,
@@ -107,7 +96,6 @@ const Hyper2 = () => {
           progress: undefined,
           theme: "dark",
         });
-        setValidated(false);
       } else {
         const errorMessage = formatErrorMessage(err);
         setValidationOutput(`Invalid\n${errorMessage}`);
@@ -121,42 +109,37 @@ const Hyper2 = () => {
           progress: undefined,
           theme: "dark",
         });
-        setValidated(false);
       }
     }
   };
 
   const handleSteps = () => {
-    if(validated) {
-      navigate("/step-2")
-    } else {
-      toast.error("Please validate the schema first", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      })
-    }
+    navigate("/");
   };
 
   return (
     <div className="">
+      <Confetti
+        recycle={false}
+        numberOfPieces={
+          validationOutput === "items of type number valid ✅" ? 200 : 0
+        }
+        tweenDuration={1500}
+        width={width}
+        height={height}
+        />
       <TopBar />
       <main className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-black to-gray-200 dark:from-black dark:to-gray-800 p-4 md:pl-40">
 
         <div className="w-full max-w-5xl grid grid-cols-5 gap-12">
           <div className="bg-gray-900 text-white p-6 rounded-md col-span-2">
-            <Data id={1} />
+            <Data id={2} />
           </div>
 
           <div className="bg-gray-900 text-white p-6 rounded-md col-span-3">
             <div className="text-md font-semibold mb-4 flex">
               JSON Schema
-              <p className="text-sm dark:text-slate-400">
+              <p className="text-md dark:text-slate-400">
                 (Enter your JSON Schema here...)
               </p>
             </div>
@@ -206,7 +189,7 @@ const Hyper2 = () => {
               className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               onClick={handleSteps}
             >
-              Step2
+              Home
             </button>
             </div>
           </div>
@@ -228,4 +211,4 @@ const Hyper2 = () => {
   );
 };
 
-export default Hyper2;
+export default Array2;

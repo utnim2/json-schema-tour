@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from "react";
-import * as monaco from "monaco-editor"; // Assuming you're using Monaco Editor for code editing
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { atomDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
-import stepsData from "../../data/steps.json";
 import { atelierCaveDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import stepsData from "../../data/steps.json";
 
-function Data () {
-  const [steps, setSteps] = useState([]);
+function Data({ id }) {
+  const [step, setStep] = useState(null);
 
   useEffect(() => {
-    setSteps(stepsData.steps);
-  }, []);
-  // console.log(stepsData);
+    const selectedStep = stepsData.steps.find((step) => step.id === id);
+    setStep(selectedStep);
+  }, [id]);
 
-  const renderStepCard = (step) => {
+  const renderStepCard = () => {
+    if (!step) return null;
+
     return (
-      <div className="step-card bg-gray-100 rounded-lg shadow-md p-4 mb-4 dark:bg-slate-800" key={step.description}>
+      <div className="step-card bg-gray-100 rounded-lg shadow-md p-4 mb-4 dark:bg-slate-800">
         <h2 className="text-xl font-bold dark:text-slate-200">{step.description}</h2>
         <div className="testcases mt-4 dark:text-slate-300">
           <h3 className="text-lg font-medium dark:text-slate-400">Test Cases:</h3>
@@ -39,9 +39,9 @@ function Data () {
     <div className="container mx-auto px-4 py-8 ">
       <h1 className="text-2xl font-bold">{stepsData.title}</h1>
       <p className="text-gray-700 mb-8 dark:text-gray-400">{stepsData.description}</p>
-      {steps.map(renderStepCard)}
+      {renderStepCard()}
     </div>
   );
-};
+}
 
 export default Data;

@@ -4,11 +4,13 @@
   "steps": [
     {
       "id": 1, 
-      "description": "**Step 1: Provide a JSON Schema**",
+      "description": "Step 1: Provide a JSON Schema",
       "testcases": [
         {
           "schema": {
-            "type": "string"
+            "type": "object",
+            "properties": {
+              "1invalidName": "string"    }
           },
           "expectedValidation": false
         },
@@ -33,7 +35,7 @@
     },
     {
       "id": 2, 
-      "description": "**Step 2: Validate Schema for Array of Numbers**",
+      "description": "Step 2: Validate Schema for Array of Numbers",
       "testcases": [
         {
           "schema": {
