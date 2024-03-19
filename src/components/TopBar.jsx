@@ -14,7 +14,7 @@ export function TopBar() {
                   alt="Logo"
                   className="rounded-lg"
                   height="40"
-                  src="/src/assets/logo.svg"
+                  src={"static/images/logo.svg"}
                   style={{
                     aspectRatio: "40/40",
                     objectFit: "cover",
