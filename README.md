@@ -10,7 +10,7 @@ The purpose of this project is to create a simple web application that allows us
 
 ### Features
 
-- Welcome page with a start button to initiate the validation process.
+- Welcome page with a steps button to take the users to step-1 i.e the validation process.
 - Multi-step validation experience with step descriptions and test cases.
 - Code editor for users to input their JSON schemas.
 - Validation against JSON Schema Draft 2020-12 specification.
